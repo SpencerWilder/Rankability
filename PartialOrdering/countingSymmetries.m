@@ -1,4 +1,7 @@
 function y = countingSymmetries(D)
+  % simply returns the number of symmetric pairs
+  % Dependencies - NONE
+
   %Collect information on input matrix D
   dim = size(D, 1);
 

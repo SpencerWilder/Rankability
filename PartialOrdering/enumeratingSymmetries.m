@@ -1,4 +1,7 @@
 function y = enumeratingSymmetries(D)
+  % returns cell of array of matrices where the symmetric entries have
+  % been removed.
+  % Dependencies - NONE
 
   %Collect information on input matrix D
   dim = size(D, 1);
@@ -6,6 +9,7 @@ function y = enumeratingSymmetries(D)
   %Symmetry array
   symmetryMatrix = zeros(dim, dim);
   numOfSymmetricElements = 0;
+
   %loop through all entries
   for i = 1:dim
     for j = 1:dim
@@ -20,7 +24,7 @@ function y = enumeratingSymmetries(D)
 
   %symmetryMatrix is a binary matrix where a 1 reprensents the presence of
   %a symmetric element.
-  [rowIndex, colIndex] = find(symmetryMatrix);
+  [rowIndex, colIndex] = find(triu(symmetryMatrix));
 
   %create bit strings to determine which elements to set to zero.
   bitStrings = strcat(dec2bin(0:2^(numOfSymmetricPairs)-1), dec2bin(2^(numOfSymmetricPairs) - 1 : -1: 0));
@@ -33,10 +37,13 @@ function y = enumeratingSymmetries(D)
         for i = 1:length(rowIndex)
             if bitString(i) == '0'
               A{k}(rowIndex(i),colIndex(i)) = 0;
+            else
+              A{k}(colIndex(i), rowIndex(i)) = 0;
             end
         end
       end
-      y = A
+      y = A;
   else
-      y = D
+      y = D;
+  end
 end
